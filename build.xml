@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="toss_java" default="jar" basedir=".">
+	<property name="src.dir" value="./src" />
+	<property name="classes.dir" value="./classes" />
+	<property name="libs.dir" value="./lib" />
+	<property name="doc.dir" value="./doc" />
+
+	<property name="jarname" value="toss.jar" />
+	<property name="acl.jar" value="/home1/irteam/jar/extjar/commons-lang3-3.3.2.jar" />
+
+	<target name="clean">
+		<delete dir="${classes.dir}" />
+		<delete dir="${libs.dir}" />
+		<delete dir="${doc.dir}" />
+	</target>
+
+	<target name="compile" depends="clean">
+		<mkdir dir="${classes.dir}" />
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false">
+		    <classpath>
+				<pathelement location="${acl.jar}" />
+		    </classpath>
+		</javac>
+	</target>
+
+	<target name="jar" depends="compile">
+		<mkdir dir="${libs.dir}" />
+		<jar destfile="${libs.dir}/${jarname}">
+		    <fileset dir="${classes.dir}" />
+			<manifest>
+				<attribute name="Main-Class" value="com.naver.weblab.toss.TossDriver" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="doc">
+		<mkdir dir="${doc.dir}" />
+		<javadoc sourcepath="${src.dir}" destdir="${doc.dir}" encoding="UTF-8" docencoding="UTF-8" charset="UTF-8">
+			<classpath>
+				<pathelement location="${acl.jar}" />
+			</classpath>
+			<link href="http://docs.oracle.com/javase/7/docs/api/" />
+			<link href="http://commons.apache.org/proper/commons-lang/javadocs/api-release/" />
+		</javadoc>
+	</target>
+</project>
